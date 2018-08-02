@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../controllers/userController');
+var passport = require('passport');
+var checkAuth = require('../middleware/checkAuth');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -19,6 +21,22 @@ router.get('/', function(req, res, next) {
       });
       return;
     });
+});
+
+router.get('/signup', function(req, res, next) {
+  res.render('signup');
+});
+
+router.get('/signin', function(req, res, next) {
+  res.render('signin');
+});
+
+router.post('/signin', passport.authenticate('local', {
+  successRedirect: '/',
+  failureDirect: '/users/signin',
+  failureFlash: { type: 'error_msg', message: 'Invalid username or password!'}
+}), (req, res, next) => {
+  return;
 });
 
 router.post('/createuser', function(req, res, next) {

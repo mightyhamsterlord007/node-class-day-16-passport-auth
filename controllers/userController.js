@@ -10,7 +10,12 @@ module.exports = {
   },
   createUser: (params) => {
     return new Promise((resolve, reject) => {
-      User.register(new User({email: params.email}), params.password)
+
+      let user = new User({
+        email: params.email
+      });
+
+      User.register(user, params.password)
         .then(user => resolve(user))
         .catch(error => reject(error));
     });

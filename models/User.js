@@ -5,17 +5,18 @@ var uniqueValidator = require('mongoose-unique-validator');
 
 var userSchema = new mongoose.Schema({
     email: {type: String, unique: true, lowercase: true, required: true, default: ''},
+    username: {type: String, unique: true, lowercase: true, required: true, default: ''},
     createdTimeStamp: {type: String, default: () => moment().format("dddd, MMMM Do YYYY, h:mm:ss a")} 
 });
 
-var options = {
-    usernameField: 'email'
-}
+// var options = {
+//     usernameField: 'email'
+// }
 
 //if I were to use both email and username log in I will have to use the code below
-// var options = {
-//     usernameQueryFields: ['email', 'username']
-// }
+var options = {
+    usernameQueryFields: ['email', 'username']
+}
 
 userSchema.plugin(passportLocalMongoose, options);
 userSchema.plugin(uniqueValidator);
