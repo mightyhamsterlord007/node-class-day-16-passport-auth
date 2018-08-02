@@ -21,4 +21,23 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.post('/createuser', function(req, res, next) {
+
+  userController.createUser(req.body)
+    .then((user) => {
+      res.json({
+        message: 'Success',
+        data: user
+      });
+      return;
+    })
+    .catch((error) => {
+      res.json({
+        message: 'Failure',
+        data: error
+      });
+      return;
+    });
+});
+
 module.exports = router;
