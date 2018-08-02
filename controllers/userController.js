@@ -10,9 +10,10 @@ module.exports = {
   },
   createUser: (params) => {
     return new Promise((resolve, reject) => {
-
+      console.log(params)
       let user = new User({
-        email: params.email
+        email: params.email,
+        username: params.username
       });
 
       User.register(user, params.password)

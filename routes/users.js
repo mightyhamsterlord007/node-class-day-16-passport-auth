@@ -5,7 +5,7 @@ var passport = require('passport');
 var checkAuth = require('../middleware/checkAuth');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', checkAuth.isLoggedIn, function(req, res, next) {
   userController.getAllUsers({})
     .then((users) => {
       res.json({
@@ -33,10 +33,10 @@ router.get('/signin', function(req, res, next) {
 
 router.post('/signin', passport.authenticate('local', {
   successRedirect: '/',
-  failureDirect: '/users/signin',
+  failureRedirect: '/users/signin',
   failureFlash: { type: 'error_msg', message: 'Invalid username or password!'}
 }), (req, res, next) => {
-  return;
+
 });
 
 router.post('/createuser', function(req, res, next) {
